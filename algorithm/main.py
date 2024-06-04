@@ -95,6 +95,7 @@ while max(fitnessValues) < ONE_MAX_LENGTH and generationCounter < MAX_GENERATION
     maxFitnessValues.append(maxFitness)
     meanFitnessValues.append(meanFitness)
     print(f"Поколение {generationCounter}: Макс приспособ. = {maxFitness}, Средняя приспособ.= {meanFitness}")
+
     best_index = fitnessValues.index(max(fitnessValues)) # индекс лучшего индивидуума
     print("Лучший индивидуум = ", *adultsPopulation[best_index], "\n")
 
