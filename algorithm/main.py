@@ -13,7 +13,7 @@ P_IMPACT = 0.8  # вероятность положительного влиян
 P_SELECTION = 0.6  # вероятность попадания особи в список дважды при турнирном отборе
 MAX_GENERATIONS = 100  # максимальное количество поколений
 
-RANDOM_SEED = 5
+RANDOM_SEED = 17
 random.seed(RANDOM_SEED)
 
 
@@ -93,11 +93,10 @@ def mutFlipBit(mutant, indpb=0.01):  # мутация
         if random.random() < indpb:
             mutant[indx] = 0 if mutant[indx] == 1 else 1  # инверсия бита (если равен 1, то меняем на 0, иначе 1)
 
-def socialImpact(child, indpb=0.01):  # инверсия бита (если равен 0, то меняем на 1)
+def socialImpact(child, indpb=0.01):  # инверсия бита
     for index in range(len(child)):
         if random.random() < indpb:
-            if child[index] == 0:
-                child[index] = 1
+            child[index] = 0 if child[index] == 1 else 1
 
 
 fitnessValues = [individual.fitness.values[0] for individual in
