@@ -13,7 +13,7 @@ P_IMPACT = 0.8  # вероятность положительного влиян
 P_SELECTION = 0.6  # вероятность попадания особи в список дважды при турнирном отборе
 MAX_GENERATIONS = 100  # максимальное количество поколений
 
-RANDOM_SEED = 17
+RANDOM_SEED = 40
 random.seed(RANDOM_SEED)
 
 
@@ -93,11 +93,6 @@ def mutFlipBit(mutant, indpb=0.01):  # мутация
         if random.random() < indpb:
             mutant[indx] = 0 if mutant[indx] == 1 else 1  # инверсия бита (если равен 1, то меняем на 0, иначе 1)
 
-def socialImpact(child, indpb=0.01):  # инверсия бита
-    for index in range(len(child)):
-        if random.random() < indpb:
-            child[index] = 0 if child[index] == 1 else 1
-
 
 fitnessValues = [individual.fitness.values[0] for individual in
                  menAndWomenAdultsPopulation]  # список значений функции приспособленности
@@ -141,9 +136,9 @@ while max(fitnessValues) < ONE_MAX_LENGTH and generationCounter < MAX_GENERATION
         if random.random() < P_MUTATION:
             mutFlipBit(mutant, indpb=1.0 / ONE_MAX_LENGTH)
 
-    for child in menAndWomenChildrenPopulation:  # положительное влияние на детских особей в период воспитания
-        if random.random() < P_IMPACT:
-            socialImpact(child, indpb=1.0 / ONE_MAX_LENGTH)
+    #for child in menAndWomenChildrenPopulation:  # положительное влияние на детских особей в период воспитания
+     #   if random.random() < P_IMPACT:
+      #      mutFlipBit(child, indpb=1.0 / ONE_MAX_LENGTH)
 
     freshFitnessValues = list(
         map(oneMaxFitness, menAndWomenChildrenPopulation))  # обновление функции приспособленности для новой популяции
@@ -168,17 +163,17 @@ while max(fitnessValues) < ONE_MAX_LENGTH and generationCounter < MAX_GENERATION
     print("Лучший индивидуум = ", *menAndWomenAdultsPopulation[best_index])
     print("Пол лучшего индивидуума: ", best_gender, "\n")
 
-    fitnessMinMen = fitnessValues[:100]  # список детских мужских особей
-    fitnessMinWomen = fitnessValues[100:]  # список детских женских особей
-    for i in range(0, 5):  # гибель 15 особей с наименьшей целевой функцией мужского пола
-        minFitnessIndexMen = fitnessMinMen.index(min(fitnessMinMen))  # индекс особи с наименьшей целевой функцией
-        del fitnessMinMen[minFitnessIndexMen]  # удаление особи из списка
-        del menAndWomenAdultsPopulation[minFitnessIndexMen]  # удаление особи из списка
-    for j in range(0, 5):  # гибель 15 особей с наименьшей целевой функцией женского пола
-        minFitnessIndexWomen = fitnessMinWomen.index(min(fitnessMinWomen))  # индекс особи с наименьшей целевой функцией
-        del fitnessMinWomen[minFitnessIndexWomen]  # удаление особи из списка
-        minFitnessIndexWomen = minFitnessIndexWomen + 95
-        del menAndWomenAdultsPopulation[minFitnessIndexWomen]  # удаление особи из списка
+    #fitnessMinMen = fitnessValues[:100]  # список детских мужских особей
+    #fitnessMinWomen = fitnessValues[100:]  # список детских женских особей
+    #for i in range(0, 5):  # гибель 15 особей с наименьшей целевой функцией мужского пола
+     #   minFitnessIndexMen = fitnessMinMen.index(min(fitnessMinMen))  # индекс особи с наименьшей целевой функцией
+      #  del fitnessMinMen[minFitnessIndexMen]  # удаление особи из списка
+       # del menAndWomenAdultsPopulation[minFitnessIndexMen]  # удаление особи из списка
+    #for j in range(0, 5):  # гибель 15 особей с наименьшей целевой функцией женского пола
+     #   minFitnessIndexWomen = fitnessMinWomen.index(min(fitnessMinWomen))  # индекс особи с наименьшей целевой функцией
+      #  del fitnessMinWomen[minFitnessIndexWomen]  # удаление особи из списка
+       # minFitnessIndexWomen = minFitnessIndexWomen + 95
+       # del menAndWomenAdultsPopulation[minFitnessIndexWomen]  # удаление особи из списка
 
     for s in range(0, 5):  # случайная смертность 5 детских особей мужского пола
         indexMen = random.randint(0, 89)
